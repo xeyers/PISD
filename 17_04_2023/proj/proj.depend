@@ -1,0 +1,7 @@
+# depslib dependency file v1.0
+1681717400 source:f:\pisd\17_04_2023\proj\main.cpp
+	"bib.h"
+
+1681717658 f:\pisd\17_04_2023\proj\bib.h
+	<iostream>
+

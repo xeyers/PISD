@@ -1,0 +1,18 @@
+# depslib dependency file v1.0
+1680505924 source:f:\pisd\03_04_2023\proj3\bib.cpp
+	"bib.h"
+
+1680506954 f:\pisd\03_04_2023\proj3\bib.h
+	<iostream>
+	<stdexcept>
+
+1680507174 source:f:\pisd\03_04_2023\proj3\bib_kolejka.cpp
+	"bib_kolejka.h"
+
+1680506958 f:\pisd\03_04_2023\proj3\bib_kolejka.h
+	"bib.h"
+
+1680507144 source:f:\pisd\03_04_2023\proj3\main.cpp
+	"bib.h"
+	"bib_kolejka.h"
+

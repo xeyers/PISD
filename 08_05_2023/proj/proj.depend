@@ -1,0 +1,12 @@
+# depslib dependency file v1.0
+1683735940 source:f:\pisd\08_05_2023\proj\bib.cpp
+	"bib.h"
+
+1683530712 f:\pisd\08_05_2023\proj\bib.h
+	<iostream>
+	<stdexcept>
+	<algorithm>
+
+1683735570 source:f:\pisd\08_05_2023\proj\main.cpp
+	"bib.h"
+
