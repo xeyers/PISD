@@ -38,11 +38,6 @@ void Sznur::wstaw(const int& number)
             {
                 previous->next = nowy;
             }
-            else if(current == head)
-            {
-                nowy->next = head->next;
-                head->next = nowy;
-            }
             else
             {
                 previous->next = nowy;
