@@ -1,0 +1,10 @@
+# depslib dependency file v1.0
+1684697713 source:c:\users\kamil2\desktop\cpp\programowanie obiektowe\zaawansowane_algorytmy_projekty\zestaw 1 - kolokwium 1\zestaw 1 - kolokwium 1\main.cpp
+	"bib.h"
+
+1684691952 c:\users\kamil2\desktop\cpp\programowanie obiektowe\zaawansowane_algorytmy_projekty\zestaw 1 - kolokwium 1\zestaw 1 - kolokwium 1\bib.h
+	<iostream>
+
+1684697685 source:c:\users\kamil2\desktop\cpp\programowanie obiektowe\zaawansowane_algorytmy_projekty\zestaw 1 - kolokwium 1\zestaw 1 - kolokwium 1\bib.cpp
+	"bib.h"
+
