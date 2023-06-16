@@ -2,6 +2,8 @@
 #define BIB
 
 #include<iostream>
+#include<fstream>
+#include<stdexcept>
 using namespace std; //for convinience, obviously for any use you should delete this and add std:: where needed
 
 ///Custom structures used:
@@ -14,7 +16,8 @@ bool firstControlDigit(const string& IBAN); //checks if first control digit is c
 int calculateModulo97(const string& number); //calculates IBAN mod 97
 bool controlSumCheck(const string& IBAN); //checks if control sum is correct
 bool isCorrectStructure(const string& IBAN); //checks if length is correct and if the first 2 characters are letters and the rest digits
-bool checkIBAN(const string& IBAN); //checks if whole IBAN is correct utilizing functions above
+bool checkIBAN(string& IBAN); //checks if whole IBAN is correct utilizing functions above
+void trunc(string& text, const char& what); //to remove eventual spaces from IBAN
 
 ///Code:
 struct List
@@ -30,9 +33,97 @@ private:
     Node* tail;
 public:
     List() : head(nullptr), tail(nullptr){}
-    ~List();
+    ~List() = default;
+    void add(const string& fileName);
+    void print() const;
     friend void listToFile(const List& ls);
 };
+
+void List::print() const
+{
+    Node* n = head;
+    while(n)
+    {
+        cout << n->data << endl;
+        n = n->next;
+    }
+}
+
+void trunc(string& text, const char& what)
+{
+    ///Starting condition
+    //String of text and what character to remove
+
+    ///End condition
+    //Text passed as argument without specified character
+
+    ///Exceptions:
+    //Due to how C++ works this function will only take variable, strings passed like this "string" will not work
+    //and since this function use is limited to only this excercise there is not much sense to make another one that would take "string"
+    //but if for some reason you need "string" change ||string& text|| to ||string&& text|| so it can take rvalues reference
+
+    string tmp = "";
+    for(char x : text)
+    {
+        if(x == what) continue;
+        else tmp += x;
+    }
+    text = tmp;
+}
+
+void List::add(const string& fileName)
+{
+    ///Starting conditions
+    //Name of file with IBANs in it
+
+    ///End conditions
+    //Correct IBANS on the list, incorrect on the console
+
+    ///Exceptions
+    //File might not exist in that case program throws error and terminates itself
+
+    ///Please note that this function compares string like this ">" instead of using any method to check numbers.
+    ///This works in this case only because all IBANs are from same country meaning same structure
+
+    fstream file(fileName, ios::in);
+    if(file.good())
+    {
+        string line = "";
+        while(getline(file,line))
+        {
+            if(!(checkIBAN(line))) cout << line << endl;
+            else
+            {
+                Node* newNode = new Node(line);
+
+                if(head == nullptr) head = newNode; //empty list
+                else if(line < head->data) //new head
+                {
+                    newNode->next = head;
+                    head = newNode;
+                }
+                else //inbetween or at the end
+                {
+                    Node* n1 = head, *n2 = nullptr;
+                    while(n1 != nullptr && n1->data < line)
+                    {
+                        n2 = n1;
+                        n1 = n1->next;
+                    }
+
+                    if(!n1) n2->next = newNode; //if the bigger node doesn't exist new node is put at the end
+                    else
+                    {
+                        n2->next = newNode;
+                        newNode->next = n1;
+                    }
+                }
+            }
+        }
+    }
+    else throw runtime_error("File does not exist");
+
+}
 
 void listToFile(const List& ls)
 {
@@ -151,7 +242,7 @@ bool isCorrectStructure(const string& IBAN)
     return true;
 }
 
-bool checkIBAN(const string& IBAN)
+bool checkIBAN(string& IBAN)
 {
     ///Starting conditions
     //IBAN number
@@ -163,6 +254,7 @@ bool checkIBAN(const string& IBAN)
     ///Exceptions
     //No exceptions
 
+    trunc(IBAN, ' ');
     if(!(isCorrectStructure(IBAN))) return false;
     if(!(bankCheck(IBAN))) return false; //checks if bank id is one of three specified in excercise
     if(!(firstControlDigit(IBAN))) return false; //checks first control digit
