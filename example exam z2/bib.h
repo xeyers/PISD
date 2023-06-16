@@ -23,24 +23,32 @@ void trunc(string& text, const char& what); //to remove eventual spaces from IBA
 struct List
 {
 private:
-    struct Node
+    struct Node //node structure used in the list structure
     {
         string data;
         Node* next;
         Node(const string& d) : data(d), next(nullptr){}
     };
     Node* head;
-    Node* tail;
 public:
-    List() : head(nullptr), tail(nullptr){}
-    ~List();
-    void add(const string& fileName);
-    void print() const;
-    friend void listToFile(const List& ls);
+    List() : head(nullptr){} //constructor
+    ~List(); //destructor
+    void add(const string& fileName); //adds correct IBANs to the list, incorrect ones are printeed on the console
+    void print() const; //test function to see if list works correctly
+    friend void listToFile(const List& ls); //sends IBANs from the list to their respective files
 };
 
 List::~List()
 {
+    ///Starting conditions
+    //Linked list
+
+    ///End conditions
+    //Gone, reduced to atoms
+
+    ///Exceptions
+    //None
+
     Node* runner = head, *killer = nullptr;
     while(runner)
     {
@@ -52,6 +60,15 @@ List::~List()
 
 void List::print() const
 {
+    ///Starting conditions
+    //Linked list
+
+    ///End conditions
+    //Linked list
+
+    ///Exceptions
+    //None (if list is empty nothing is printed)
+
     Node* n = head;
     while(n)
     {
@@ -93,8 +110,8 @@ void List::add(const string& fileName)
     ///Exceptions
     //File might not exist in that case program throws error and terminates itself
 
-    ///Please note that this function compares string like this ">" instead of using any method to check numbers.
-    ///This works in this case only because all IBANs are from same country meaning same structure
+    ///Please note that this function compares strings like this ">" instead of using any method to check numbers.
+    ///This works in this case only because all IBANs are from the same country meaning they have the same structure
 
     fstream file(fileName, ios::in);
     if(file.good())
@@ -102,7 +119,8 @@ void List::add(const string& fileName)
         string line = "";
         while(getline(file,line))
         {
-            if(!(checkIBAN(line))) cout << line << endl;
+            if(line.empty()) continue;
+            else if(!(checkIBAN(line))) cout << line << endl;
             else
             {
                 Node* newNode = new Node(line);
@@ -133,12 +151,47 @@ void List::add(const string& fileName)
         }
     }
     else throw runtime_error("File does not exist");
-
+    file.close();
 }
 
 void listToFile(const List& ls)
 {
+    ///Starting conditions
+    //List with correct IBANs
 
+    ///End conditions
+    //IBANs saved to their respective files
+
+    ///Exceptions
+    //List might be empty, in that case program displays "Empty list" on the console and terminates itself
+
+    if(!(ls.head)) throw runtime_error("Empty list");
+
+    fstream f1020("1020.txt",ios::app); //iPKO
+    fstream f1140("1140.txt",ios::app); //mBank
+    fstream f2490("2490.txt",ios::app); //AliorBank
+
+    List::Node* n = ls.head; //pointer used to read IBANs from nodes
+
+
+    while(n)
+    {
+        if(n->data[4] == '1')
+        {
+            if(n->data[5] == '1') f1140 << n->data << endl;
+            else f1020 << n->data << endl;
+        }
+        else f2490 << n->data << endl;
+
+
+        n = n->next;
+
+
+    }
+
+    f1020.close();
+    f1140.close();
+    f2490.close();
 }
 
 bool bankCheck(const string& IBAN)
@@ -241,11 +294,21 @@ bool controlSumCheck(const string& IBAN)
 
     tmp = tmp + "2521" + IBAN[2] + IBAN[3];
 
-    return (calculateModulo97(tmp) == 1) ? true : false;
+    return (calculateModulo97(tmp) == 1) ? true : false; //if reminder is 1 then everything is correct and true is returned
 }
 
 bool isCorrectStructure(const string& IBAN)
 {
+    ///Starting conditions
+    //IBAN number
+
+    ///End conditions
+    //Returns true if IBAN has correct structure
+    //Returns false if not
+
+    ///Exceptions
+    //No exceptions
+
     if(IBAN.size() != 28) return false; //checks if the length of IBAN is correct
     if(IBAN[0] - '0' >= 0 && IBAN[0] - '0' <= 9) return false; //if the first number is not a letter returns false
     if(IBAN[1] - '0' >= 0 && IBAN[1] - '0' <= 9) return false; //if the second number is not a letter returns false
