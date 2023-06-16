@@ -33,11 +33,22 @@ private:
     Node* tail;
 public:
     List() : head(nullptr), tail(nullptr){}
-    ~List() = default;
+    ~List();
     void add(const string& fileName);
     void print() const;
     friend void listToFile(const List& ls);
 };
+
+List::~List()
+{
+    Node* runner = head, *killer = nullptr;
+    while(runner)
+    {
+        killer = runner;
+        runner = runner->next;
+        delete killer;
+    }
+}
 
 void List::print() const
 {
