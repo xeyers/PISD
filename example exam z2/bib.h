@@ -212,7 +212,7 @@ bool bankCheck(const string& IBAN)
         toCheck += IBAN[i];
     }
 
-    return (toCheck == "1020" || toCheck == "1140" || toCheck == "2490") ? true : false;
+    return (toCheck == "1020" || toCheck == "1140" || toCheck == "2490");
 }
 
 bool firstControlDigit(const string& IBAN)
@@ -245,7 +245,7 @@ bool firstControlDigit(const string& IBAN)
 
     //if sum%10 is the last number then it's correct
     //otherwise it's not
-    return (sum%10 == toCheck[7]) ? true : false;
+    return (sum%10 == toCheck[7]);
 }
 
 int calculateModulo97(const string& number)
@@ -294,7 +294,7 @@ bool controlSumCheck(const string& IBAN)
 
     tmp = tmp + "2521" + IBAN[2] + IBAN[3];
 
-    return (calculateModulo97(tmp) == 1) ? true : false; //if reminder is 1 then everything is correct and true is returned
+    return (calculateModulo97(tmp) == 1); //if reminder is 1 then everything is correct and true is returned
 }
 
 bool isCorrectStructure(const string& IBAN)
