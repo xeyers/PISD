@@ -120,7 +120,7 @@ void List::add(const string& fileName)
         while(getline(file,line))
         {
             if(line.empty()) continue;
-            else if(!(checkIBAN(line))) cout << line << endl;
+            else if(!(checkIBAN(line))) cout << "Incorrect IBAN: " << line << endl;
             else
             {
                 Node* newNode = new Node(line);
