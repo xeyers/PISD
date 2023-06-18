@@ -88,7 +88,7 @@ void trunc(string& text, const char& what)
     ///Exceptions:
     //Due to how C++ works this function will only take variable, strings passed like this "string" will not work
     //and since this function use is limited to only this excercise there is not much sense to make another one that would take "string"
-    //but if for some reason you need "string" change ||string& text|| to ||string&& text|| so it can take rvalues reference
+    //but if for some reason you need "string" change ||string& text|| to ||string&& text|| so it can take rvalues references
 
     string tmp = "";
     for(char x : text)
