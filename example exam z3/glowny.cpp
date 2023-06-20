@@ -147,7 +147,6 @@ int main()
         counter++;
     }
 
-    ls.print();
 
     listToFile<Podatnik>(ls,"wyniki.txt");
 
