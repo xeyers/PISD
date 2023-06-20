@@ -1,0 +1,20 @@
+Orange
+Juice
+7043350822
+100
+
+Banana
+Milkshake
+7716487654
+-12345
+
+Chocolate
+Ice Cream
+6291005346
+-10
+
+Great
+Pomegranade
+2165097563
+1000
+
