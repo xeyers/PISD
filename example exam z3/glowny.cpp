@@ -11,27 +11,38 @@ ostream& operator<< (ostream& os, const Podatnik& p)//wywalic
 
 
 template<typename T>
-void listToFile(List<T> ls, const string& fileName)
+void listToFile(List<T>& ls, const string& fileName)
 {
+    ///Starting condition
+    //List and file name
+
+    ///End condition
+    //Everything from the list is send to file (it's out mode so the data is either replaced or new file is created if it doesn't exist already)
+
+    ///Exceptions:
+    //None
+
     fstream file(fileName, ios::out);
-    if(file.good())
+
+    Node<T>* n = ls.getHead();
+    while(n)
     {
-        Node<T>* n = ls.getHead();
-        while(n)
-        {
-            file << n->data << endl << endl;
-            n = n->next;
-        }
+        file << n->data << endl << endl;
+        n = n->next;
     }
-    else throw runtime_error("Given file does not exist");
 }
-
-// Explicit instantiation for specific types
-//template void listToFile<Podatnik>(List<Podatnik> ls, const std::string& fileName);
-
 
 string roundFloat(float value)
 {
+    ///Starting condition
+    //Float number (presumably a string converted to a float)
+
+    ///End condition
+    //Returns rounded number (classical rounding) as a string
+
+    ///Exceptions:
+    //None
+
     int rounded = static_cast<int>(value); //intiger part od the number
     float fractional = value - rounded; //decimal part of the number
 
@@ -40,7 +51,7 @@ string roundFloat(float value)
         rounded += 1;
     }
 
-    return to_string(rounded);
+    return to_string(rounded); //to_string function used to convert int to string
 }
 
 int main()
@@ -62,31 +73,27 @@ int main()
         podatnicyCounter++;
     }
 
-    // SprawdŸ, czy ostatnia linia jest pusta i zwiêksz licznik linii
-    if (dummyString.empty())
+    if (dummyString.empty()) //to count last empty line correctly
     {
         podatnicyCounter++;
     }
 
     while(getline(rozliczenia, dummyString))
     {
+        if(dummyString.empty()) throw runtime_error("Empty line in rozliczenia.txt detected"); //rozliczenia.txt cannot have any empty lines
         rozliczeniaCounter++;
     }
 
-    // SprawdŸ, czy ostatnia linia jest pusta i zwiêksz licznik linii
-    if (dummyString.empty())
-    {
-        rozliczeniaCounter++;
-    }
+    if(dummyString.empty()) throw runtime_error("Last line in rozliczenia.txt is empty"); //rozliczenia.txt cannot have any empty lines
 
-    if(rozliczeniaCounter * 3 != podatnicyCounter) throw runtime_error("Incorrect number of lines in the files");
+    if(rozliczeniaCounter * 3 != podatnicyCounter) throw runtime_error("Incorrect number of lines in the files"); //for every line in rozliczenia.txt there must be 3 lines in podatnicy.txt
 
-    // Rewind the file
-    podatnicy.clear();  // Clear any error flags
-    podatnicy.seekg(0, ios::beg);  // Set the file position indicator to the beginning
+    //rewind the files
+    podatnicy.clear();  //clear any error flags
+    podatnicy.seekg(0, ios::beg);  //set the file position indicator to the beginning
 
-    rozliczenia.clear();  // Clear any error flags
-    rozliczenia.seekg(0, ios::beg);  // Set the file position indicator to the beginning
+    rozliczenia.clear();  //clear any error flags
+    rozliczenia.seekg(0, ios::beg);  //set the file position indicator to the beginning
     ///===========================================================================================
 
     List<Podatnik> ls;
@@ -131,17 +138,8 @@ int main()
 
                 break;
             case 3:
-                //getline(rozliczenia,line2);
-                //if(flag)
-                //{
-                //    if(checkKDR(line2)) dummy.setKdr(roundFloat(stof(line2)));
-                //    else dummy.setKdr("DO WERYFIKACJI");
-                //}
                 counter = 0;
                 flag = true;
-
-
-
                 break;
         }
         counter++;
