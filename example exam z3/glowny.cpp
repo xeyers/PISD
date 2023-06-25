@@ -27,7 +27,7 @@ void listToFile(List<T> ls, const string& fileName)
 }
 
 // Explicit instantiation for specific types
-template void listToFile<Podatnik>(List<Podatnik> ls, const std::string& fileName);
+//template void listToFile<Podatnik>(List<Podatnik> ls, const std::string& fileName);
 
 
 string roundFloat(float value)
